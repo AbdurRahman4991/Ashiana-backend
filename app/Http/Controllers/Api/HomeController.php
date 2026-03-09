@@ -96,7 +96,7 @@ class HomeController extends Controller
             ->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'logo' => asset('storage/manufacturers/'.$item->logo)
+                    'logo' => asset('storage/products/'.$item->logo)
                 ];
             });
 
@@ -108,7 +108,7 @@ class HomeController extends Controller
             ->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'image' => asset('storage/categories/'.$item->image)
+                    'image' => asset('storage/products/'.$item->image)
                 ];
             });
 
