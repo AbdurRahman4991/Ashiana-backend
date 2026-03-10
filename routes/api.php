@@ -17,6 +17,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 Route::get('/sliders', [SliderController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/products/trending', [ProductController::class, 'trending'])->middleware('auth:sanctum');
-Route::get('/manufacturers', [ManufacturerController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/manufacturers/{id}', [ManufacturerController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth:sanctum');
 
