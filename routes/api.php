@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ManufacturerController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\CategoryControler;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -19,4 +20,5 @@ Route::get('/sliders', [SliderController::class, 'index'])->middleware('auth:san
 Route::get('/products/trending', [ProductController::class, 'trending'])->middleware('auth:sanctum');
 Route::get('/manufacturers/{id}', [ManufacturerController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/categories/{id}', [CategoryControler::class, 'index'])->middleware('auth:sanctum');
 
