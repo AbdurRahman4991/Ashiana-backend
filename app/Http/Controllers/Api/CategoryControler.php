@@ -9,14 +9,14 @@ use App\Models\ProductManage;
 class CategoryControler extends Controller
 {
     public function index($id)
-{
-    $products = ProductManage::with(['category','manufacturing'])
-        ->where('brand_id', $id)
-        ->paginate(10);
+    {
+        $products = ProductManage::with(['category','manufacturing'])
+            ->where('category_id', $id)
+            ->paginate(10);
 
-    return response()->json([
-        'status' => true,
-        'data' => $products
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'data' => $products
+        ]);
+    }
 }

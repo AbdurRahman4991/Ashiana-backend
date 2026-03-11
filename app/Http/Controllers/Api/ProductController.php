@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Interfaces\ProductRepositoryInterface;
 use App\Http\Resources\ProductResource;
+use App\Models\ProductManage;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -25,4 +27,17 @@ class ProductController extends Controller
                 'data' => ProductResource::collection($products)
             ]);
         }
+
+        public function newProducts()
+        {
+            $products = ProductManage::with(['category','manufacturing'])
+                ->where('created_at', '>=', Carbon::now()->subDays(30))
+                ->paginate(10);
+
+            return response()->json([
+                'status' => true,
+                'data' => $products
+            ]);
+        }
+
 }
