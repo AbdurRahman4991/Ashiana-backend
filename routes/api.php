@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ManufacturerController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\CategoryControler;
+use App\Http\Controllers\Api\OrderControllr;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -22,4 +23,5 @@ Route::get('/new/products', [ProductController::class, 'newProducts'])->middlewa
 Route::get('/manufacturers/{id}', [ManufacturerController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/categories/{id}', [CategoryControler::class, 'index'])->middleware('auth:sanctum');
+Route::post('/orders', [OrderControllr::class, 'placeOrder'])->middleware('auth:sanctum');
 
