@@ -12,19 +12,24 @@ use App\Http\Controllers\Api\OrderControllr;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-
-})->middleware('auth:sanctum');
-Route::get('/sliders', [SliderController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/search', [ProductController::class, 'search']);
-Route::get('/products/trending', [ProductController::class, 'trending'])->middleware('auth:sanctum');
-Route::get('/new/products', [ProductController::class, 'newProducts'])->middleware('auth:sanctum');
-Route::get('/manufacturers/{id}', [ManufacturerController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/home', [HomeController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/categories/{id}', [CategoryControler::class, 'index'])->middleware('auth:sanctum');
-Route::post('/orders', [OrderControllr::class, 'placeOrder'])->middleware('auth:sanctum');
-Route::get('/my-orders', [OrderControllr::class, 'myOrders'])->middleware('auth:sanctum');
 
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
 
+// })->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/sliders', [SliderController::class, 'index']);
+    Route::get('/products/trending', [ProductController::class, 'trending']);
+    Route::get('/manufacturers/{id}', [ManufacturerController::class, 'index']);
+    Route::get('/new/products', [ProductController::class, 'newProducts']);
+    Route::get('/categories/{id}', [CategoryControler::class, 'index']);
+    Route::get('/home', [HomeController::class, 'index']);
+    Route::post('/orders', [OrderControllr::class, 'placeOrder']);
+    Route::get('/my-orders', [OrderControllr::class, 'myOrders']);
+
+    Route::get('/orders/{id}', [OrderControllr::class, 'show']);
+    Route::get('/orders/{id}/invoice', [OrderControllr::class, 'invoice']);
+
+});

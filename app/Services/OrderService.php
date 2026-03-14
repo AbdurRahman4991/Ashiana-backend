@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\OrderRepositoryInterface;
+use PDF;
 
 class OrderService
 {
@@ -45,5 +46,22 @@ class OrderService
     public function myOrders($userId)
     {
         return $this->orderRepo->getUserOrders($userId);
+    }
+
+     public function getOrderDetails($id)
+    {
+        return $this->orderRepo->findWithItems($id);
+    }
+
+    public function generateInvoice($id)
+    {
+
+        $order = $this->orderRepo->findWithItems($id);
+
+        $pdf = PDF::loadView('invoice.invoice', [
+            'order' => $order
+        ]);
+
+        return $pdf->download("invoice-{$order->id}.pdf");
     }
 }

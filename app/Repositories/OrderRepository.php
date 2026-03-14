@@ -24,11 +24,18 @@ class OrderRepository implements OrderRepositoryInterface
         });
     }
 
-        public function getUserOrders($userId)
+     public function getUserOrders($userId)
     {
         return OrderManage::with('orderItems')
                 ->where('user_id', $userId)
                 ->latest()
                 ->get();
+    }
+
+    public function findWithItems($id)
+    {
+        return OrderManage::with([
+            'orderItems.product'
+        ])->findOrFail($id);
     }
 }

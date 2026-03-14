@@ -9,4 +9,10 @@ class OrderItem extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function product()
+    {
+        return $this->belongsTo(ProductManage::class,'product_id');
+    }
 }
+

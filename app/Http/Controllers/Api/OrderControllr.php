@@ -49,4 +49,21 @@ class OrderControllr extends Controller
             "data" => $orders
         ]);
     }
+
+    public function show($id)
+    {
+
+        $order = $this->orderService->getOrderDetails($id);
+
+        return response()->json([
+            "status" => true,
+            "data" => $order
+        ]);
+
+    }
+
+    public function invoice($id)
+    {
+        return $this->orderService->generateInvoice($id);
+    }
 }
