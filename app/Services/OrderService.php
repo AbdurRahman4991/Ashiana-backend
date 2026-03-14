@@ -41,4 +41,9 @@ class OrderService
 
         return $this->orderRepo->createOrder($orderData, $formattedItems);
     }
+
+    public function myOrders($userId)
+    {
+        return $this->orderRepo->getUserOrders($userId);
+    }
 }

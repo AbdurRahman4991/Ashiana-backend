@@ -23,4 +23,12 @@ class OrderRepository implements OrderRepositoryInterface
             return $order->load('orderItems');
         });
     }
+
+        public function getUserOrders($userId)
+    {
+        return OrderManage::with('orderItems')
+                ->where('user_id', $userId)
+                ->latest()
+                ->get();
+    }
 }

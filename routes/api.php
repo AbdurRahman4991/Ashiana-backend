@@ -18,10 +18,13 @@ Route::get('/user', function (Request $request) {
 
 })->middleware('auth:sanctum');
 Route::get('/sliders', [SliderController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/search', [ProductController::class, 'search']);
 Route::get('/products/trending', [ProductController::class, 'trending'])->middleware('auth:sanctum');
 Route::get('/new/products', [ProductController::class, 'newProducts'])->middleware('auth:sanctum');
 Route::get('/manufacturers/{id}', [ManufacturerController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/categories/{id}', [CategoryControler::class, 'index'])->middleware('auth:sanctum');
 Route::post('/orders', [OrderControllr::class, 'placeOrder'])->middleware('auth:sanctum');
+Route::get('/my-orders', [OrderControllr::class, 'myOrders'])->middleware('auth:sanctum');
+
 

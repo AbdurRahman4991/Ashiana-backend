@@ -19,4 +19,11 @@ class ProductManage extends Model
     {
         return $this->belongsTo(CategoryManage::class, 'category_id');
     }
+
+    public function generic()
+    {
+        return $this->belongsTo(GenericManage::class,);
+    }
+
+
 }

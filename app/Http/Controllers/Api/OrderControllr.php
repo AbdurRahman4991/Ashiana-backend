@@ -37,4 +37,16 @@ class OrderControllr extends Controller
             'data' => $order
         ], 201);
     }
+
+    public function myOrders(Request $request)
+    {
+        $userId = auth()->id();
+
+        $orders = $this->orderService->myOrders($userId);
+
+        return response()->json([
+            "status" => true,
+            "data" => $orders
+        ]);
+    }
 }
