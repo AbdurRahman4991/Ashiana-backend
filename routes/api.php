@@ -9,15 +9,18 @@ use App\Http\Controllers\Api\ManufacturerController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\CategoryControler;
 use App\Http\Controllers\Api\OrderControllr;
+use App\Http\Controllers\Api\ProfileController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('/search', [ProductController::class, 'search']);
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
+Route::get('/user', function (Request $request) {
+    return $request->user();
+      
+    
 
-// })->middleware('auth:sanctum');
+})->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/sliders', [SliderController::class, 'index']);
@@ -28,8 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/home', [HomeController::class, 'index']);
     Route::post('/orders', [OrderControllr::class, 'placeOrder']);
     Route::get('/my-orders', [OrderControllr::class, 'myOrders']);
-
     Route::get('/orders/{id}', [OrderControllr::class, 'show']);
     Route::get('/orders/{id}/invoice', [OrderControllr::class, 'invoice']);
+    Route::put('/profile', [ProfileController::class, 'update']);
+    Route::get('/products/{id}', [ProductController::class, 'show']);
 
 });
