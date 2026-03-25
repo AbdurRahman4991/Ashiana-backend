@@ -14,7 +14,7 @@ class ProductResource extends JsonResource
             'selling_price' => $this->selling_price,
             'image' => asset('storage/products/'.$this->image),
             'total_ordered' => $this->total_ordered,
-            'discount_price' => $this->discounted_price,
+            'discounted_price' => $this->discounted_price,
             'discount_percent' => $this->discount_percent,
             'generic_name' => optional($this->generic)->name,
             'generic_id'=> $this->generic_id,
