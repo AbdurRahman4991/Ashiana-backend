@@ -76,4 +76,21 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return ProductManage::with(['category','manufacturing','generic'])->find($id);
     }
+
+    public function filterProducts($categoryIds = [], $companyIds = [])
+    {
+        $query = ProductManage::query();
+
+        // Category filter
+        if (!empty($categoryIds)) {
+            $query->whereIn('category_id', $categoryIds);
+        }
+
+        // Company filter
+        if (!empty($companyIds)) {
+            $query->whereIn('brand_id', $companyIds);
+        }
+
+        return $query->latest()->get();
+    }
 }

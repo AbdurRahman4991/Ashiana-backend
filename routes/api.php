@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\CategoryControler;
 use App\Http\Controllers\Api\OrderControllr;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\CategoryController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -35,5 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/{id}/invoice', [OrderControllr::class, 'invoice']);
     Route::put('/profile', [ProfileController::class, 'update']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::get('/companies', [CompanyController::class, 'index']);
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::post('/products/filter', [ProductController::class, 'filter']);
 
 });
