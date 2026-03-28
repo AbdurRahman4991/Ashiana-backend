@@ -23,7 +23,7 @@ class ProfileController extends Controller
             'pharmacy_name' => 'required|string|max:255',
             'contact_no' => 'required|string|max:15',
             'address' => 'required|string|max:255',
-           // 'password' => 'nullable|string|min:6',
+            'password' => 'nullable|string|min:6',
         ]);
 
         $data = $request->only(['name', 'pharmacy_name', 'contact_no', 'address', 'password']);

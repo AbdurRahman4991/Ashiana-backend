@@ -21,9 +21,9 @@ class UserService
 
     public function updateProfile($userId, array $data)
     {
-        // if (isset($data['password'])) {
-        //     $data['password'] = Hash::make($data['password']);
-        // }
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
         return $this->userRepo->updateUser($userId, $data);
     }
 }

@@ -45,71 +45,40 @@ class ProductController extends Controller
         ]);
     }
 
-    // public function search(Request $request)
-    // {
-    //     $search = $request->search;
-
-    //     $products = ProductManage::with(['manufacturing','generic','category'])
-    //         ->where('name', 'LIKE', "%$search%")
-    //         ->orWhereHas('manufacturing', function ($q) use ($search) {
-    //             $q->where('name', 'LIKE', "%$search%");
-    //         })
-    //         ->orWhereHas('category', function ($q) use ($search) {
-    //             $q->where('name', 'LIKE', "%$search%");
-    //         })
-    //         ->select(
-    //             'id',
-    //             'name',
-    //             'slug',
-    //             'image',
-    //             'brand_id',
-    //             'category_id',
-    //             'selling_price',
-    //             'discounted_price',
-    //             'discount_percent',
-    //             'stock'
-    //         )
-    //         ->paginate(10)
-    //         ->get();
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'data' => $products
-    //     ]);
-    // }
+    
     public function search(Request $request)
-{
-    $search = $request->search;
+    {
+        $search = $request->search;
 
-    $products = ProductManage::with(['manufacturing','generic','category'])
-        ->where(function ($query) use ($search) {
-            $query->where('name', 'LIKE', "%$search%")
-                ->orWhereHas('manufacturing', function ($q) use ($search) {
-                    $q->where('name', 'LIKE', "%$search%");
-                })
-                ->orWhereHas('category', function ($q) use ($search) {
-                    $q->where('name', 'LIKE', "%$search%");
-                });
-        })
-        ->select(
-            'id',
-            'name',
-            'slug',
-            'image',
-            'brand_id',
-            'category_id',
-            'selling_price',
-            'discounted_price',
-            'discount_percent',
-            'stock'
-        )
-        ->paginate(10); // ✅ only paginate
+        $products = ProductManage::with(['manufacturing','generic','category'])
+            ->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%$search%")
+                    ->orWhereHas('manufacturing', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%$search%");
+                    })
+                    ->orWhereHas('category', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%$search%");
+                    });
+            })
+            ->select(
+                'id',
+                'name',
+                'slug',
+                'image',
+                'brand_id',
+                'category_id',
+                'selling_price',
+                'discounted_price',
+                'discount_percent',
+                'stock'
+            )
+            ->paginate(10); // ✅ only paginate
 
-    return response()->json([
-        'status' => true,
-        'data' => $products
-    ]);
-}
+        return response()->json([
+            'status' => true,
+            'data' => $products
+        ]);
+    }
 
     public function show($id)
     {
@@ -138,4 +107,24 @@ class ProductController extends Controller
             'data' => $products
         ]);
     }
+
+    //  public function details($slug)
+    // {
+    //     $data = $this->productService->getProductDetails($slug);
+
+    //     if (!$data) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Product not found'
+    //         ], 404);
+    //     }
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Product details fetched successfully',
+    //         'data' => $data
+    //     ]);
+    // }
+
+
 }
