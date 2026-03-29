@@ -14,7 +14,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getTrendingProducts(int $perPage = 10)
     {
-        return DB::table('order_items')
+        $products = DB::table('order_items')
             ->join('product_manages', 'order_items.product_id', '=', 'product_manages.id')
             ->select(
                 'product_manages.id',
@@ -36,7 +36,15 @@ class ProductRepository implements ProductRepositoryInterface
                 'product_manages.image'
             )
             ->orderByDesc('total_ordered')
-            ->paginate($perPage); // 👈 এখানে paginate
+            ->paginate($perPage);
+
+        // Map করে image কে full URL বানানো
+        $products->getCollection()->transform(function ($item) {
+            $item->image = asset('storage/products/' . $item->image); 
+            return $item;
+        });
+
+        return $products;
     }
 
     public function findById($id)
