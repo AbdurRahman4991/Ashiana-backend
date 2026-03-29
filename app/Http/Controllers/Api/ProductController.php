@@ -45,7 +45,7 @@ class ProductController extends Controller
         ]);
     }
 
-    
+
     public function search(Request $request)
     {
         $search = $request->search;
@@ -80,23 +80,44 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show($id)
-    {
-        $product = $this->productService->getProductDetails($id);
+//     public function show($id)
+//     {
+//         $product = $this->productService->getProductDetails($id);
+//
+//         if (!$product) {
+//             return response()->json([
+//                 'success' => false,
+//                 'message' => 'Product not found'
+//             ], 404);
+//         }
+//
+//         return response()->json([
+//             'success' => true,
+//             'message' => 'Product details fetched successfully',
+//             'data' => new ProductResource($product)
+//         ]);
+//     }
+        public function show($id)
+        {
+            $data = $this->productService->getProductDetails($id);
 
-        if (!$product) {
+            if (!$data) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Product not found'
+                ], 404);
+            }
+
             return response()->json([
-                'success' => false,
-                'message' => 'Product not found'
-            ], 404);
+                'success' => true,
+                'message' => 'Product details fetched successfully',
+                'data' => [
+                    'product' => new ProductResource($data['product']),
+                    'alternativeBrands' => ProductResource::collection($data['alternativeBrands']),
+                    'recommendedProducts' => ProductResource::collection($data['recommendedProducts']),
+                ]
+            ]);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Product details fetched successfully',
-            'data' => new ProductResource($product)
-        ]);
-    }
 
     public function filter(Request $request, ProductService $service)
     {
