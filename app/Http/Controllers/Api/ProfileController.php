@@ -23,10 +23,9 @@ class ProfileController extends Controller
             'pharmacy_name' => 'required|string|max:255',
             'contact_no' => 'required|string|max:15',
             'address' => 'required|string|max:255',
-            'password' => 'nullable|string|min:6',
         ]);
 
-        $data = $request->only(['name', 'pharmacy_name', 'contact_no', 'address', 'password']);
+        $data = $request->only(['name', 'pharmacy_name', 'contact_no', 'address']);
 
         $user = $this->userService->updateProfile(Auth::id(), $data);
 
@@ -35,5 +34,23 @@ class ProfileController extends Controller
             'message' => 'Profile updated successfully',
             'data' => $user
         ]);
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|min:6|confirmed', // new_password_confirmation ফিল্ড লাগবে
+        ]);
+
+        $userId = Auth::id();
+
+        $result = $this->userService->changePassword(
+            $userId,
+            $request->old_password,
+            $request->new_password
+        );
+
+        return response()->json($result);
     }
 }

@@ -21,9 +21,23 @@ class UserService
 
     public function updateProfile($userId, array $data)
     {
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        }
+      
         return $this->userRepo->updateUser($userId, $data);
+    }
+
+    public function changePassword($userId, $oldPassword, $newPassword)
+    {
+        $user = $this->userRepo->getById($userId);
+        if (!$user) {
+            return ['success' => false, 'message' => 'User not found'];
+        }
+
+        if (!Hash::check($oldPassword, $user->password)) {
+            return ['success' => false, 'message' => 'Old password is incorrect'];
+        }
+
+        $this->userRepo->updatePassword($userId, $newPassword);
+
+        return ['success' => true, 'message' => 'Password updated successfully'];
     }
 }
