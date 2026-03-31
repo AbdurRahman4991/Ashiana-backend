@@ -53,15 +53,20 @@ class OrderService
         return $this->orderRepo->findWithItems($id);
     }
 
-    public function generateInvoice($id)
-    {
+public function generateInvoice($id)
+{
+    $order = $this->orderRepo->findWithItems($id);
 
-        $order = $this->orderRepo->findWithItems($id);
+    $pdf = PDF::loadView('invoice.invoice', [
+        'order' => $order
+    ]);
 
-        $pdf = PDF::loadView('invoice.invoice', [
-            'order' => $order
-        ]);
-
-        return $pdf->download("invoice-{$order->id}.pdf");
+    if (ob_get_length()) {
+        ob_end_clean();
     }
+
+    return response($pdf->output(), 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'inline; filename="invoice.pdf"');
+}
 }
