@@ -102,13 +102,14 @@ class HomeController extends Controller
 
 
             // Categories
-            $categories = CategoryManage::select('id','image')
+            $categories = CategoryManage::select('id','image','name')
             ->limit(10)
             ->get()
             ->map(function ($item){
                 return [
                     'id' => $item->id,
-                    'image' => asset('storage/products/'.$item->image)
+                    'image' => asset('storage/products/'.$item->image),
+                    'name'=> $item->name,
                 ];
             });
 
