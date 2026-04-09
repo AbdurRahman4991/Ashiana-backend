@@ -47,5 +47,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/products/filter', [ProductController::class, 'filter']);
     Route::get('/product-details/{slug}', [ProductController::class, 'details']);
     Route::post('user/reset-password', [ProfileController::class, 'reset']);
-
+    Route::delete('/user', [AuthController::class, 'destroy']);
 });

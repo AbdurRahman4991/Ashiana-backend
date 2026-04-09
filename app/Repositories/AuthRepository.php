@@ -37,4 +37,15 @@ class AuthRepository implements AuthRepositoryInterface
 
         return Auth::user();
     }
+
+    public function deleteAuthUser()
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return false;
+        }
+
+        return $user->delete();
+    }
 }

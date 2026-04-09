@@ -61,4 +61,15 @@ class AuthController extends Controller
             'user' => $user
         ]);
     }
+
+    public function destroy()
+{
+    $deleted = $this->authRepository->deleteAuthUser();
+
+    if (!$deleted) {
+        return response()->json(['message' => 'Unauthorized'], 401);
+    }
+
+    return response()->json(['message' => 'Account deleted successfully']);
+}
 }
